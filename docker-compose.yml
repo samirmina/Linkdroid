@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  linkdroid:
+    build: .
+    container_name: linkdroid
+    # USB device passthrough for Android device
+    devices:
+      - "/dev/bus/usb:/dev/bus/usb"
+    # Allow USB device access
+    privileged: true
+    # Network mode for ADB
+    network_mode: host
+    # Mount USB device filesystem
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+      - /run/udev:/run/udev
+    environment:
+      - DISPLAY=:0
+    stdin_open: true
+    tty: true
+    command: ["--help"]
